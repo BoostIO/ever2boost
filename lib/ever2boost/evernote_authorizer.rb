@@ -31,29 +31,31 @@ module Ever2boost
 
     def notebook_list
       guids = self.notebook_guids
-      self.fetch_notebook_list.map { |nl| Ever2boost::NoteList.new(title: nl.name, hash: nl.hash, guid: nl.guid) }
+      self.fetch_notebook_list.map { |nl| Ever2boost::NoteList.new(title: nl.name, guid: nl.guid) }
     end
 
     def number_of_note(filter)
       note_counts_hash = self.note_store.findNoteCounts(self.developer_token, filter, true).notebookCounts
-      note_counts_hash.values.last || 0
+      note_counts_hash.nil? ? 0 : note_counts_hash.values.last
     end
 
     def fetch_notes(filter)
       spec = Evernote::EDAM::NoteStore::NotesMetadataResultSpec.new(includeTitle: true, includeNotebookGuid: true)
+      number_of_note = self.number_of_note(filter)
 
       # get latest 250 notes
       # TODO: display message like "ignored first #{(number_of_notes - 250).to_s} notes due to EvernoteAPI access limitation" if number_of_notes > 250
-      start_index = self.number_of_note(filter) > 250 ? self.number_of_note(filter) - 250 : 0
-      self.note_store.findNotesMetadata(self.developer_token, filter, start_index, 15, spec)
+      start_index = number_of_note > 250 ? number_of_note - 250 : 0
+      self.note_store.findNotesMetadata(self.developer_token, filter, start_index, number_of_note, spec)
     end
 
     # Download the all of notes fron Evernote and generate Boostnote storage from it
     # TODO: move this method to CLI
     def import(output_dir)
       FileUtils.mkdir_p(output_dir) unless FileTest.exist?(output_dir)
+      notebook_list = self.notebook_list
 
-      Ever2boost::JsonGenerator.output(self.notebook_list, output_dir)
+      Ever2boost::JsonGenerator.output(notebook_list, output_dir)
 
       self.notebook_guids.each do |notebook_guid|
         filter = Evernote::EDAM::NoteStore::NoteFilter.new(notebookGuid: notebook_guid)
@@ -62,7 +64,7 @@ module Ever2boost
         en_notes = note_guids.map {|note_guid| self.note_store.getNote(self.developer_token, note_guid, true, true, false, false)}
         notes = en_notes.map {|note| Note.new(title: note.title, content: note.content, notebook_guid: note.notebookGuid)}
         notes.each do |note|
-          self.notebook_list.each do |list|
+          notebook_list.each do |list|
             # TODO: break if note not found
             CsonGenerator.output(list.hash, note, output_dir) if list.guid == note.notebook_guid
           end
