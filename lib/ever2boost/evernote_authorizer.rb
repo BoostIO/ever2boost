@@ -1,7 +1,6 @@
 require 'evernote-thrift'
 require 'ever2boost/note'
 require 'ever2boost/note_list'
-require 'pry-byebug'
 
 module Ever2boost
   class EvernoteAuthorizer
@@ -22,35 +21,49 @@ module Ever2boost
       @note_store = note_store
     end
 
-    def fetch_notes(output_dir)
+    def fetch_notebook_list
+      self.note_store.listNotebooks(self.developer_token)
+    end
+
+    def notebook_guids
+      self.fetch_notebook_list.map(&:guid)
+    end
+
+    def notebook_list
+      guids = self.notebook_guids
+      self.fetch_notebook_list.map { |nl| Ever2boost::NoteList.new(title: nl.name, hash: nl.hash, guid: nl.guid) }
+    end
+
+    def number_of_note(filter)
+      note_counts_hash = self.note_store.findNoteCounts(self.developer_token, filter, true).notebookCounts
+      note_counts_hash.values.last || 0
+    end
+
+    def fetch_notes(filter)
+      spec = Evernote::EDAM::NoteStore::NotesMetadataResultSpec.new(includeTitle: true, includeNotebookGuid: true)
+
+      # get latest 250 notes
+      # TODO: display message like "ignored first #{(number_of_notes - 250).to_s} notes due to EvernoteAPI access limitation" if number_of_notes > 250
+      start_index = self.number_of_note(filter) > 250 ? self.number_of_note(filter) - 250 : 0
+      self.note_store.findNotesMetadata(self.developer_token, filter, start_index, 15, spec)
+    end
+
+    # Download the all of notes fron Evernote and generate Boostnote storage from it
+    # TODO: move this method to CLI
+    def import(output_dir)
       FileUtils.mkdir_p(output_dir) unless FileTest.exist?(output_dir)
 
-      note_store = self.note_store
-      notebook_list = note_store.listNotebooks(self.developer_token)
-      notebook_guids = notebook_list.map(&:guid)
-      lists = notebook_list.map { |nl| Ever2boost::NoteList.new(title: nl.name, hash: hash, guid: nl.guid) }
-      Ever2boost::JsonGenerator.generate_boostnote_json(lists, output_dir)
+      Ever2boost::JsonGenerator.generate_boostnote_json(self.notebook_list, output_dir)
 
-      notebook_guids.each do |notebook_guid|
-        filter = Evernote::EDAM::NoteStore::NoteFilter.new
-        filter.notebookGuid = notebook_guid
-
-        spec = Evernote::EDAM::NoteStore::NotesMetadataResultSpec.new(includeTitle: true, includeNotebookGuid: true)
-
-        # get latest 250 notes
-          note_counts_hash = note_store.findNoteCounts(self.developer_token, filter, true).notebookCounts
-          number_of_notes = note_counts_hash.values.last || 0
-        # TODO: display message like "ignored first #{(number_of_notes - 250).to_s} notes due to EvernoteAPI access limitation" if number_of_notes > 250
-        start_index = number_of_notes > 250 ? number_of_notes - 250 : 0
-        note_list = note_store.findNotesMetadata(self.developer_token, filter, start_index, 15, spec)
-
-        note_guids = note_list.notes.map(&:guid)
+      self.notebook_guids.each do |notebook_guid|
+        filter = Evernote::EDAM::NoteStore::NoteFilter.new(notebookGuid: notebook_guid)
+        note_guids = self.fetch_notes(filter).notes.map(&:guid)
         # TODO: assign the booleans
-        en_notes = note_guids.map {|note_guid| note_store.getNote(self.developer_token, note_guid, true, true, false, false)}
+        en_notes = note_guids.map {|note_guid| self.note_store.getNote(self.developer_token, note_guid, true, true, false, false)}
         notes = en_notes.map {|note| Note.new(title: note.title, content: note.content, notebook_guid: note.notebookGuid)}
         notes.each do |note|
-          lists.each do |list|
-            # TODO: break if note found
+          self.notebook_list.each do |list|
+            # TODO: break if note not found
             CsonGenerator.generate(list.hash, note, output_dir) if list.guid == note.notebook_guid
           end
         end
