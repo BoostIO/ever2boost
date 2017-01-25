@@ -1,29 +1,19 @@
+require 'json'
+
 module Ever2boost
   class JsonGenerator
     class << self
       def build(notebook_list)
-        folders = <<-EOS
-        EOS
-
-        notebook_list.each do |list|
-          brace = notebook_list.last == list ? '}' : '},'
-          folders += <<-EOS
-    {
-      "key": "#{list.hash}",
-      "name": "#{list.title}",
-      "color": "#{list.color}"
-    #{brace}
-          EOS
-        end
-
-        json = <<-EOS
-{
-  "folders": [
-#{folders.chomp}
-  ],
-  "version": "1.0"
-}
-        EOS
+        {
+          folders: notebook_list.map { |list|
+            {
+              key: list.hash,
+              name: list.title,
+              color: list.color
+            }
+          },
+          version: '1.0'
+        }.to_json
       end
 
       def output(notebook_list, output_dir)
