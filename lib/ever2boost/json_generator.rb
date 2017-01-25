@@ -11,7 +11,7 @@ module Ever2boost
     ].freeze
 
     class << self
-      def generate_boostnote_json(note_list)
+      def generate_boostnote_json(note_list, output_dir)
         folders = <<-EOS
         EOS
 
@@ -36,7 +36,7 @@ module Ever2boost
           }
         EOS
 
-        File.open("#{ENV['HOME']}/ever2boost_store/boostnote.json","w") do |f|
+        File.open("#{output_dir}/boostnote.json","w") do |f|
           f.write(json)
         end
       end
