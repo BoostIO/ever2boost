@@ -62,8 +62,8 @@ module Ever2boost
         note_guids = self.fetch_notes(filter).notes.map(&:guid)
         # TODO: assign the booleans
         en_notes = note_guids.map {|note_guid| self.note_store.getNote(self.developer_token, note_guid, true, true, false, false)}
-        notes = en_notes.map {|note| Note.new(title: note.title, content: note.content, notebook_guid: note.notebookGuid)}
-        notes.each do |note|
+        en_notes. each do |en_note|
+          note = Note.new(title: en_note.title, content: en_note.content, notebook_guid: en_note.notebookGuid)
           notebook_list.each do |list|
             # TODO: break if note not found
             CsonGenerator.output(list.hash, note, output_dir) if list.guid == note.notebook_guid
