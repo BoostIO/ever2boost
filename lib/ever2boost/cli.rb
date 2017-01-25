@@ -8,7 +8,7 @@ module Ever2boost
     desc "import", "import from evernote"
     def import
       developer_token = ask('DEVELOPER_TOKEN:')
-      EvernoteAuthorizer.new(developer_token).generate_cson(DEFAULT_OUTPUT_DIR)
+      EvernoteAuthorizer.new(developer_token).import(DEFAULT_OUTPUT_DIR)
     end
 
     class << self

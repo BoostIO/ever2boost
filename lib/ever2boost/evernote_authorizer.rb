@@ -53,7 +53,7 @@ module Ever2boost
     def import(output_dir)
       FileUtils.mkdir_p(output_dir) unless FileTest.exist?(output_dir)
 
-      Ever2boost::JsonGenerator.generate_boostnote_json(self.notebook_list, output_dir)
+      Ever2boost::JsonGenerator.output(self.notebook_list, output_dir)
 
       self.notebook_guids.each do |notebook_guid|
         filter = Evernote::EDAM::NoteStore::NoteFilter.new(notebookGuid: notebook_guid)
@@ -64,7 +64,7 @@ module Ever2boost
         notes.each do |note|
           self.notebook_list.each do |list|
             # TODO: break if note not found
-            CsonGenerator.generate(list.hash, note, output_dir) if list.guid == note.notebook_guid
+            CsonGenerator.output(list.hash, note, output_dir) if list.guid == note.notebook_guid
           end
         end
       end

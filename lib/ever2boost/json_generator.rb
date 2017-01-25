@@ -11,13 +11,13 @@ module Ever2boost
     ].freeze
 
     class << self
-      def generate_boostnote_json(note_list, output_dir)
+      def build(notebook_list)
         folders = <<-EOS
         EOS
 
-        note_list.each do |list|
+        notebook_list.each do |list|
           random_color = self.random_color
-          brace = note_list.last == list ? '}' : '},'
+          brace = notebook_list.last == list ? '}' : '},'
           folders += <<-EOS
             {
               "key": "#{list.hash}",
@@ -35,15 +35,17 @@ module Ever2boost
             "version": "1.0"
           }
         EOS
-
-        File.open("#{output_dir}/boostnote.json","w") do |f|
-          f.write(json)
-        end
       end
 
       def random_color
         index =  ((Random.new().rand * 7)*10.floor % 7).to_i
         FOLDER_COLORS[index]
+      end
+
+      def output(notebook_list, output_dir)
+        File.open("#{output_dir}/boostnote.json","w") do |f|
+          f.write(self.build(notebook_list))
+        end
       end
     end
   end
