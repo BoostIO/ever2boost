@@ -10,11 +10,5 @@ module Ever2boost
       developer_token = ask('DEVELOPER_TOKEN:')
       EvernoteAuthorizer.new(developer_token).import(DEFAULT_OUTPUT_DIR)
     end
-
-    class << self
-      def tell(message)
-        tell(message)
-      end
-    end
   end
 end

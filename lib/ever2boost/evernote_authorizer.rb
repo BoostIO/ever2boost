@@ -19,6 +19,8 @@ module Ever2boost
       note_store = Evernote::EDAM::NoteStore::NoteStore::Client.new(note_store_protocol)
       @developer_token = developer_token
       @note_store = note_store
+    rescue => e
+      abort_with_message e
     end
 
     def fetch_notebook_list
@@ -52,6 +54,7 @@ module Ever2boost
     # Download the all of notes fron Evernote and generate Boostnote storage from it
     # TODO: move this method to CLI
     def import(output_dir)
+      puts 'processing...'
       FileUtils.mkdir_p(output_dir) unless FileTest.exist?(output_dir)
       notebook_list = self.notebook_list
 
@@ -69,6 +72,19 @@ module Ever2boost
             CsonGenerator.output(list.hash, note, output_dir) if list.guid == note.notebook_guid
           end
         end
+      end
+      puts 'Successfully finished!'
+    rescue => e
+      abort_with_message e
+    end
+
+    def abort_with_message(exception)
+      if exception.class == Evernote::EDAM::Error::EDAMUserException
+        abort "\e[31mError! Confirm your developer token\e[0m"
+      elsif exception.class == Evernote::EDAM::Error::EDAMSystemException
+        abort "\e[31mError! You reached EvernoteAPI rate limitation\e[0m"
+      else
+        raise exception
       end
     end
   end
