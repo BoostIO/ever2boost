@@ -12,10 +12,12 @@ module Ever2boost
           Note.new(title: title, content: "<div>#{REXML::Document.new(note).elements['note/content/text()'].value.sub(/.+\n/, '').sub(/.+\n/, '')}</div>")
         }
         notebook_list = [NoteList.new(title: filename)]
+        puts 'converting...'
         JsonGenerator.output(notebook_list, output_dir)
         notes.each do |note|
           CsonGenerator.output(notebook_list.first.hash, note, output_dir)
         end
+        puts 'Success!'
       end
     end
   end

@@ -83,7 +83,7 @@ module Ever2boost
       if exception.class == Evernote::EDAM::Error::EDAMUserException
         abort "\e[31mError! Confirm your developer token\e[0m"
       elsif exception.class == Evernote::EDAM::Error::EDAMSystemException
-        abort "\e[31mError! You reached EvernoteAPI rate limitation\e[0m"
+        abort "\e[31mError! You reached EvernoteAPI rate limitation\nmore information: https://github.com/BoostIO/ever2boost/tree/master/docs/Api_error.md\e[0m"
       else
         raise exception
       end
