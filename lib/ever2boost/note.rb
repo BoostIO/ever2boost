@@ -10,5 +10,9 @@ module Ever2boost
       @notebook_guid = notebook_guid
       @file_name = SecureRandom.hex(DEFAULT_BYTES_NUMBER)
     end
+
+    def md_content
+      MdConverter.convert(self.content)
+    end
   end
 end
