@@ -1,3 +1,5 @@
+require 'ever2boost/util'
+
 module Ever2boost
   class CsonGenerator
     class << self
@@ -22,6 +24,7 @@ updatedAt: "#{timestamp}"
       end
 
       def output(folder_hash, note, output_dir)
+        Util.make_output_dir(output_dir)
         File.open("#{output_dir}/notes/#{note.file_name}.cson", "w") do |f|
           f.write(self.build(folder_hash, note))
         end

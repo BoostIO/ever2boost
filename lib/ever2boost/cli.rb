@@ -11,7 +11,6 @@ module Ever2boost
     option :directory, aliases: :d, banner: 'DIRCTORY_PATH', desc: "make Boostnote storage in the directory default: ~/evernote_storage"
     def import
       output_dir = options[:directory] || DEFAULT_OUTPUT_DIR
-      Util.make_output_dir(output_dir)
       developer_token = ask('DEVELOPER_TOKEN:')
       EvernoteAuthorizer.new(developer_token).import(output_dir)
     end
@@ -20,7 +19,6 @@ module Ever2boost
     option :directory, aliases: :d, banner: 'DIRCTORY_PATH', desc: "make Boostnote storage in the directory default: ~/evernote_storage"
     def convert(path)
       output_dir = options[:directory] || DEFAULT_OUTPUT_DIR
-      Util.make_output_dir(output_dir)
       enex = File.read(path)
       filename = File.basename(path, ".enex")
       EnexConverter.convert(enex, output_dir, filename)
