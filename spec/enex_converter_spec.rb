@@ -6,6 +6,7 @@ describe Ever2boost::EnexConverter do
   let(:output_dir) { 'spec/dist/evernote_storage' }
   let(:filename) { 'lorem' }
   let(:cson_folder_hash) do
+    # I use `ls` because the filename of cson is random.
     cson_filename = `ls spec/dist/evernote_storage/notes`.lines.first.chomp
     File.read("#{output_dir}/notes/#{cson_filename}").lines[1].chomp.slice(/[a-f0-9]{12}/)
   end
@@ -15,11 +16,9 @@ describe Ever2boost::EnexConverter do
   end
 
   describe '#convert' do
-    before do
+    around(:each) do |example|
       Ever2boost::EnexConverter.convert(enex, output_dir, filename)
-    end
-
-    after do
+      example.run
       FileUtils.rm_r(output_dir)
     end
 
