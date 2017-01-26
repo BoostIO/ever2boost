@@ -48,7 +48,7 @@ module Ever2boost
       # get latest 250 notes
       # TODO: display message like "ignored first #{(number_of_notes - 250).to_s} notes due to EvernoteAPI access limitation" if number_of_notes > 250
       start_index = number_of_note > 250 ? number_of_note - 250 : 0
-      self.note_store.findNotesMetadata(self.developer_token, filter, start_index, number_of_note, spec)
+      self.note_store.findNotesMetadata(self.developer_token, filter, start_index, 1, spec)
     end
 
     # Download the all of notes fron Evernote and generate Boostnote storage from it
@@ -65,8 +65,9 @@ module Ever2boost
         note_guids = self.fetch_notes(filter).notes.map(&:guid)
         # TODO: assign the booleans
         en_notes = note_guids.map {|note_guid| self.note_store.getNote(self.developer_token, note_guid, true, true, false, false)}
-        en_notes. each do |en_note|
+        en_notes.each do |en_note|
           note = Note.new(title: en_note.title, content: en_note.content, notebook_guid: en_note.notebookGuid)
+          puts "importing #{find_notebook_by_guid_from_notebook_list(notebook_list, note).title}"
           notebook_list.each do |list|
             # TODO: break if note not found
             CsonGenerator.output(list.hash, note, output_dir) if list.guid == note.notebook_guid
@@ -86,6 +87,12 @@ module Ever2boost
       else
         raise exception
       end
+    end
+
+    def find_notebook_by_guid_from_notebook_list(notebook_list, note)
+      notebook_list.map do |nl|
+        nl if note.notebook_guid == nl.guid
+      end.compact.first
     end
   end
 end
