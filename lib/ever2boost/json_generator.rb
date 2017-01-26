@@ -1,4 +1,5 @@
 require 'json'
+require 'ever2boost/util'
 
 module Ever2boost
   class JsonGenerator
@@ -17,6 +18,7 @@ module Ever2boost
       end
 
       def output(notebook_list, output_dir)
+        Util.make_output_dir(output_dir)
         File.open("#{output_dir}/boostnote.json","w") do |f|
           f.write(self.build(notebook_list))
         end
