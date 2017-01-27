@@ -3,7 +3,7 @@ require 'ever2boost/util'
 module Ever2boost
   class CsonGenerator
     class << self
-      def build(folder_hash, note, output_dir)
+      def build(folder_hash, note)
         cson = <<-EOS
 type: "MARKDOWN_NOTE"
 folder: "#{folder_hash}"
