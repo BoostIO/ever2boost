@@ -26,7 +26,7 @@ updatedAt: "#{timestamp}"
       def output(folder_hash, note, output_dir)
         Util.make_notes_dir(output_dir)
         File.open("#{output_dir}/notes/#{note.file_name}.cson", 'w') do |f|
-          f.write(build(folder_hash, note, output_dir))
+          f.write(build(folder_hash, note))
         end
       end
     end
