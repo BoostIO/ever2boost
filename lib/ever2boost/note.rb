@@ -13,7 +13,11 @@ module Ever2boost
     end
 
     def md_content
-      MdConverter.convert(content).gsub(/<en-media\ hash=.(.+?).\ type=.(.+?)\/(.+?).\/>/, "![#{'\1'}](#{self.output_dir}/images/#{'\1'}.#{'\3'})")
+      build_image_link(MdConverter.convert(content))
+    end
+
+    def build_image_link(content_str)
+      content_str.gsub(/<en-media\ hash=.(.+?).\ type=.(.+?)\/(.+?).\/>/, "![#{'\1'}](#{self.output_dir}/images/#{'\1'}.#{'\3'})")
     end
   end
 end
