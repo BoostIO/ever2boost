@@ -4,7 +4,7 @@ require 'ever2boost/note_list'
 
 module Ever2boost
   class EvernoteAuthorizer
-    EVERNOTE_HOST = "www.evernote.com"
+    EVERNOTE_HOST = 'www.evernote.com'.freeze
 
     attr_accessor :developer_token, :note_store
 
@@ -24,20 +24,20 @@ module Ever2boost
     end
 
     def fetch_notebook_list
-      self.note_store.listNotebooks(self.developer_token)
+      note_store.listNotebooks(developer_token)
     end
 
     def notebook_guids
-      self.fetch_notebook_list.map(&:guid)
+      fetch_notebook_list.map(&:guid)
     end
 
     def notebook_list
-      guids = self.notebook_guids
-      self.fetch_notebook_list.map { |nl| Ever2boost::NoteList.new(title: nl.name, guid: nl.guid) }
+      guids = notebook_guids
+      fetch_notebook_list.map { |nl| Ever2boost::NoteList.new(title: nl.name, guid: nl.guid) }
     end
 
     def number_of_note(filter)
-      note_counts_hash = self.note_store.findNoteCounts(self.developer_token, filter, true).notebookCounts
+      note_counts_hash = note_store.findNoteCounts(developer_token, filter, true).notebookCounts
       note_counts_hash.nil? ? 0 : note_counts_hash.values.last
     end
 
@@ -48,7 +48,7 @@ module Ever2boost
       # get latest 250 notes
       # TODO: display message like "ignored first #{(number_of_notes - 250).to_s} notes due to EvernoteAPI access limitation" if number_of_notes > 250
       start_index = number_of_note > 250 ? number_of_note - 250 : 0
-      self.note_store.findNotesMetadata(self.developer_token, filter, start_index, 1, spec)
+      note_store.findNotesMetadata(developer_token, filter, start_index, 1, spec)
     end
 
     # Download the all of notes fron Evernote and generate Boostnote storage from it
@@ -60,11 +60,11 @@ module Ever2boost
 
       Ever2boost::JsonGenerator.output(notebook_list, output_dir)
 
-      self.notebook_guids.each do |notebook_guid|
+      notebook_guids.each do |notebook_guid|
         filter = Evernote::EDAM::NoteStore::NoteFilter.new(notebookGuid: notebook_guid)
-        note_guids = self.fetch_notes(filter).notes.map(&:guid)
+        note_guids = fetch_notes(filter).notes.map(&:guid)
         # TODO: assign the booleans
-        en_notes = note_guids.map {|note_guid| self.note_store.getNote(self.developer_token, note_guid, true, true, false, false)}
+        en_notes = note_guids.map {|note_guid| note_store.getNote(developer_token, note_guid, true, true, false, false)}
         en_notes.each do |en_note|
           note = Note.new(title: en_note.title, content: en_note.content, notebook_guid: en_note.notebookGuid)
           puts "importing #{find_notebook_by_guid_from_notebook_list(notebook_list, note).title}"

@@ -6,7 +6,7 @@ require 'fileutils'
 describe Ever2boost::CsonGenerator do
   let (:folder_hash) { '0123abcdef' }
   let (:title) { 'lorem' }
-  let (:content) { "<en-note>lorem ipsum</en-note>" }
+  let (:content) { '<en-note>lorem ipsum</en-note>' }
   let (:note) { Ever2boost::Note.new(title: title, content: content) }
   let (:md_note_content) { Ever2boost::MdConverter.convert(note.content) }
   let (:timestamp) { Ever2boost::CsonGenerator.timestamp }
@@ -14,7 +14,7 @@ describe Ever2boost::CsonGenerator do
   let (:filename) { `ls spec/dist/evernote_storage/notes`.lines.first.chomp }
 
   let (:cson) {
-<<-EOS
+    <<-EOS
 type: "MARKDOWN_NOTE"
 folder: "#{folder_hash}"
 title: "#{note.title}"

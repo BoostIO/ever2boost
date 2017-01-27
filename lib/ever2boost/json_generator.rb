@@ -19,8 +19,8 @@ module Ever2boost
 
       def output(notebook_list, output_dir)
         Util.make_output_dir(output_dir)
-        File.open("#{output_dir}/boostnote.json","w") do |f|
-          f.write(self.build(notebook_list))
+        File.open("#{output_dir}/boostnote.json", 'w') do |f|
+          f.write(build(notebook_list))
         end
       end
     end

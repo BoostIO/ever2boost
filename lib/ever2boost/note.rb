@@ -12,7 +12,7 @@ module Ever2boost
     end
 
     def md_content
-      MdConverter.convert(self.content)
+      MdConverter.convert(content)
     end
   end
 end

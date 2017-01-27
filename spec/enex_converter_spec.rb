@@ -12,7 +12,7 @@ describe Ever2boost::EnexConverter do
   end
   let(:json_folder_hash) do
     json = File.read("#{output_dir}/boostnote.json")
-    JSON.parse(json)['folders'].first["key"]
+    JSON.parse(json)['folders'].first['key']
   end
 
   describe '#convert' do
