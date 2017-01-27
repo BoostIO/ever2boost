@@ -46,7 +46,7 @@ module Ever2boost
       spec = Evernote::EDAM::NoteStore::NotesMetadataResultSpec.new(includeTitle: true, includeNotebookGuid: true)
       number_of_note = self.number_of_note(filter)
 
-      warn Util.yellow_output("Ignored first #{(number_of_note - 250)} notes due to EvernoteAPI access limitation") if number_of_note > 250
+      warn Util.yellow_output("Ignore first #{(number_of_note - 250)} notes due to EvernoteAPI access limitation in this notebook.") if number_of_note > 250
       start_index = number_of_note > 250 ? number_of_note - 250 : 0
       note_store.findNotesMetadata(developer_token, filter, start_index, number_of_note, spec)
     end
