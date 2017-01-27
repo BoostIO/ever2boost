@@ -6,7 +6,7 @@ module Ever2boost
       def convert(note_content)
         en_note = nil
         # TODO: convert evernote xml to md
-        REXML::Document.new(note_content).elements.each('*') {|el| en_note = el.to_s || en_note + el.to_s }
+        REXML::Document.new(note_content).elements.each('*') { |el| en_note = el.to_s || en_note + el.to_s }
         if en_note.nil?
           note_content
         else

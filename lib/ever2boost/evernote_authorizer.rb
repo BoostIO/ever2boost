@@ -64,7 +64,7 @@ module Ever2boost
         filter = Evernote::EDAM::NoteStore::NoteFilter.new(notebookGuid: notebook_guid)
         note_guids = fetch_notes(filter).notes.map(&:guid)
         # TODO: assign the booleans
-        en_notes = note_guids.map {|note_guid| note_store.getNote(developer_token, note_guid, true, true, false, false)}
+        en_notes = note_guids.map { |note_guid| note_store.getNote(developer_token, note_guid, true, true, false, false) }
         en_notes.each do |en_note|
           note = Note.new(title: en_note.title, content: en_note.content, notebook_guid: en_note.notebookGuid)
           puts "importing #{find_notebook_by_guid_from_notebook_list(notebook_list, note).title}"

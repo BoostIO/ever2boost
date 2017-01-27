@@ -13,7 +13,7 @@ describe Ever2boost::CsonGenerator do
   let (:output_dir) { 'spec/dist/evernote_storage' }
   let (:filename) { `ls spec/dist/evernote_storage/notes`.lines.first.chomp }
 
-  let (:cson) {
+  let (:cson) do
     <<-EOS
 type: "MARKDOWN_NOTE"
 folder: "#{folder_hash}"
@@ -27,7 +27,7 @@ isStarred: false
 createdAt: "#{timestamp}"
 updatedAt: "#{timestamp}"
 EOS
-  }
+  end
 
   describe '#build' do
     it 'should return a cson' do

@@ -6,13 +6,13 @@ module Ever2boost
     class << self
       def build(notebook_list)
         {
-          folders: notebook_list.map { |list|
+          folders: notebook_list.map do |list|
             {
               key: list.hash,
               name: list.title,
               color: list.color
             }
-          },
+          end,
           version: '1.0'
         }.to_json
       end

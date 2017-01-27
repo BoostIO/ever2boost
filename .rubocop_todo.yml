@@ -41,19 +41,6 @@ Metrics/LineLength:
 Metrics/MethodLength:
   Max: 19
 
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, ProceduralMethods, FunctionalMethods, IgnoredMethods.
-# SupportedStyles: line_count_based, semantic, braces_for_chaining
-# ProceduralMethods: benchmark, bm, bmbm, create, each_with_object, measure, new, realtime, tap, with_object
-# FunctionalMethods: let, let!, subject, watch
-# IgnoredMethods: lambda, proc, it
-Style/BlockDelimiters:
-  Exclude:
-    - 'lib/ever2boost/enex_converter.rb'
-    - 'lib/ever2boost/json_generator.rb'
-    - 'spec/cson_generator_spec.rb'
-
 # Offense count: 10
 Style/Documentation:
   Exclude:
@@ -69,22 +56,3 @@ Style/Documentation:
     - 'lib/ever2boost/note.rb'
     - 'lib/ever2boost/note_list.rb'
     - 'lib/ever2boost/util.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, AllowInnerSlashes.
-# SupportedStyles: slashes, percent_r, mixed
-Style/RegexpLiteral:
-  Exclude:
-    - 'lib/ever2boost/md_converter.rb'
-
-# Offense count: 6
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, EnforcedStyleForEmptyBraces, SpaceBeforeBlockParameters.
-# SupportedStyles: space, no_space
-Style/SpaceInsideBlockBraces:
-  Exclude:
-    - 'lib/ever2boost/evernote_authorizer.rb'
-    - 'lib/ever2boost/md_converter.rb'
-    - 'spec/cson_generator_spec.rb'
-    - 'spec/json_generator_spec.rb'
