@@ -48,7 +48,7 @@ module Ever2boost
       # get latest 250 notes
       # TODO: display message like "ignored first #{(number_of_notes - 250).to_s} notes due to EvernoteAPI access limitation" if number_of_notes > 250
       start_index = number_of_note > 250 ? number_of_note - 250 : 0
-      note_store.findNotesMetadata(developer_token, filter, start_index, 1, spec)
+      note_store.findNotesMetadata(developer_token, filter, start_index, number_of_note, spec)
     end
 
     # Download the all of notes fron Evernote and generate Boostnote storage from it
@@ -74,16 +74,17 @@ module Ever2boost
           end
         end
       end
-      puts 'Successfully finished!'
+      puts "\e[32mSuccessfully finished!\e[0m"
+      puts "\e[32mImported notes are located at #{output_dir}, mount it to Boostnote!\e[0m"
     rescue => e
       abort_with_message e
     end
 
     def abort_with_message(exception)
       if exception.class == Evernote::EDAM::Error::EDAMUserException
-        abort "\e[31mError! Confirm your developer token\e[0m"
+        abort "\e[31mError! Confirm your developer token.\e[0m"
       elsif exception.class == Evernote::EDAM::Error::EDAMSystemException
-        abort "\e[31mError! You reached EvernoteAPI rate limitation\nmore information: https://github.com/BoostIO/ever2boost/tree/master/docs/Api_error.md\e[0m"
+        abort "\e[31mError! You reached EvernoteAPI rate limitation.\nThe notes processed so far have been created successfully.\nMore information: https://github.com/BoostIO/ever2boost/tree/master/docs/Api_error.md\e[0m"
       else
         raise exception
       end
