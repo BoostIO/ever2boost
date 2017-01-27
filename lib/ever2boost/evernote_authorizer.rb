@@ -1,6 +1,8 @@
 require 'evernote-thrift'
 require 'ever2boost/note'
 require 'ever2boost/note_list'
+require 'ever2boost/util'
+require 'pry-byebug'
 
 module Ever2boost
   class EvernoteAuthorizer
@@ -45,10 +47,9 @@ module Ever2boost
       spec = Evernote::EDAM::NoteStore::NotesMetadataResultSpec.new(includeTitle: true, includeNotebookGuid: true)
       number_of_note = self.number_of_note(filter)
 
-      # get latest 250 notes
-      # TODO: display message like "ignored first #{(number_of_notes - 250).to_s} notes due to EvernoteAPI access limitation" if number_of_notes > 250
+      warn Util.yellow_output("Ignored first #{(number_of_note - 250)} notes due to EvernoteAPI access limitation") if number_of_note > 250
       start_index = number_of_note > 250 ? number_of_note - 250 : 0
-      note_store.findNotesMetadata(developer_token, filter, start_index, number_of_note, spec)
+      note_store.findNotesMetadata(developer_token, filter, start_index, 2, spec)
     end
 
     # Download the all of notes fron Evernote and generate Boostnote storage from it
@@ -60,31 +61,32 @@ module Ever2boost
 
       Ever2boost::JsonGenerator.output(notebook_list, output_dir)
 
-      notebook_guids.each do |notebook_guid|
+      # TODO: assign the booleans
+      notebook_guids.map do |notebook_guid|
         filter = Evernote::EDAM::NoteStore::NoteFilter.new(notebookGuid: notebook_guid)
         note_guids = fetch_notes(filter).notes.map(&:guid)
-        # TODO: assign the booleans
+        puts "importing #{note_store.getNotebook(developer_token, notebook_guid).name}"
         en_notes = note_guids.map { |note_guid| note_store.getNote(developer_token, note_guid, true, true, false, false) }
         en_notes.each do |en_note|
           note = Note.new(title: en_note.title, content: en_note.content, notebook_guid: en_note.notebookGuid)
-          puts "importing #{find_notebook_by_guid_from_notebook_list(notebook_list, note).title}"
+          # puts "importing #{find_notebook_by_guid_from_notebook_list(notebook_list, note).title}"
           notebook_list.each do |list|
             # TODO: break if note not found
             CsonGenerator.output(list.hash, note, output_dir) if list.guid == note.notebook_guid
           end
         end
       end
-      puts "\e[32mSuccessfully finished!\e[0m"
-      puts "\e[32mImported notes are located at #{output_dir}, mount it to Boostnote!\e[0m"
+      puts Util.green_output('Successfully finished!')
+      puts Util.green_output("Imported notes are located at #{output_dir}, mount it to Boostnote!")
     rescue => e
       abort_with_message e
     end
 
     def abort_with_message(exception)
       if exception.class == Evernote::EDAM::Error::EDAMUserException
-        abort "\e[31mError! Confirm your developer token.\e[0m"
+        abort Util.red_output('Error! Confirm your developer token.')
       elsif exception.class == Evernote::EDAM::Error::EDAMSystemException
-        abort "\e[31mError! You reached EvernoteAPI rate limitation.\nThe notes processed so far have been created successfully.\nMore information: https://github.com/BoostIO/ever2boost/tree/master/docs/Api_error.md\e[0m"
+        abort Util.red_output("Error! You reached EvernoteAPI rate limitation.\nThe notes processed so far have been created successfully.\nMore information: https://github.com/BoostIO/ever2boost/tree/master/docs/Api_error.md")
       else
         raise exception
       end

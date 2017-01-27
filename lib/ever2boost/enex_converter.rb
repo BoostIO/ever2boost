@@ -1,4 +1,5 @@
 require 'rexml/document'
+require 'ever2boost/util'
 
 module Ever2boost
   class EnexConverter
@@ -18,7 +19,7 @@ module Ever2boost
         notes.each do |note|
           CsonGenerator.output(notebook_list.first.hash, note, output_dir)
         end
-        puts "\e[32mSuccess!\nThe notes are created at #{output_dir}\e[0"
+        puts Util.green_output("The notes are created at #{output_dir}")
       end
     end
   end
