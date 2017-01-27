@@ -6,6 +6,7 @@ require 'ever2boost/util'
 module Ever2boost
   class CLI < Thor
     DEFAULT_OUTPUT_DIR = "#{ENV['HOME']}/evernote_storage".freeze
+    DEFAULT_OUTPUT_DIR_ENEX = "#{ENV['HOME']}/evernote_storage_enex".freeze
 
     desc 'import', 'import from evernote'
     option :directory, aliases: :d, banner: 'DIRCTORY_PATH', desc: 'make Boostnote storage in the directory default: ~/evernote_storage'
@@ -18,7 +19,7 @@ module Ever2boost
     desc 'convert', 'convert fron .enex'
     option :directory, aliases: :d, banner: 'DIRCTORY_PATH', desc: 'make Boostnote storage in the directory default: ~/evernote_storage'
     def convert(path)
-      output_dir = options[:directory] || DEFAULT_OUTPUT_DIR
+      output_dir = options[:directory] || DEFAULT_OUTPUT_DIR_ENEX
       abort Util.red_output("Error! No such file or directory: #{path}") unless File.exist?(path)
       enex = File.read(path)
       filename = File.basename(path, '.enex')
