@@ -48,7 +48,7 @@ module Ever2boost
 
       warn Util.yellow_output("Ignored first #{(number_of_note - 250)} notes due to EvernoteAPI access limitation") if number_of_note > 250
       start_index = number_of_note > 250 ? number_of_note - 250 : 0
-      note_store.findNotesMetadata(developer_token, filter, start_index, 1, spec)
+      note_store.findNotesMetadata(developer_token, filter, start_index, number_of_note, spec)
     end
 
     # Download the all of notes fron Evernote and generate Boostnote storage from it
