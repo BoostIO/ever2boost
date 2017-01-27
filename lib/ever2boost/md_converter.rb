@@ -10,11 +10,21 @@ module Ever2boost
         if en_note.nil?
           note_content
         else
-          en_note.gsub(/<en-note>/, '')
-                 .gsub(/<\/en-note>/, '')
-                 .gsub(/<div>/, '')
+          # TODO: create conversion table
+          en_note.gsub(/<en-note>(.*?)<\/en-note>/m, '\1')
+                 .gsub(/<div(.*?)>(.*?)<\/div>/m, '\2')
+                 .gsub(/<div(.*?)>/, '')
                  .gsub(/<\/div>/, '')
-                 .gsub(/<br\/>/, '\n\r')
+                 .gsub(/#+/, '\0 ')
+                 .gsub(/<span(.*?)>(.*?)<\/span>/m, '\2')
+                 .gsub(/<span(.*?)>/, '\2')
+                 .gsub(/<\/span>/, '')
+                 .gsub(/<ul>(.*?)<\/ul>/m, '\1')
+                 .gsub(/<td(.*?)>(.*?)<\/td>/m, '\2')
+                 .gsub(/<br(.*?)>/, '')
+                 .gsub(/<li>(.*?)<\/li>/, '* \1')
+                 .gsub(/<strong(.*?)>(.*?)<\/strong>/, '**\2**')
+                 .gsub(/<a\ href=.(.*?).>(.*?)<\/a>/, '[\2](\1)')
         end
       end
     end
