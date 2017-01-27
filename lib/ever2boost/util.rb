@@ -1,8 +1,16 @@
 module Ever2boost
   class Util
     class << self
-      def make_output_dir(output_dir)
-        FileUtils.mkdir_p("#{output_dir}/notes") unless FileTest.exist?("#{output_dir}/notes")
+      def make_output_dir(output_dir, dir_name)
+        FileUtils.mkdir_p("#{output_dir}/#{dir_name}") unless FileTest.exist?("#{output_dir}/#{dir_name}")
+      end
+
+      def make_notes_dir(output_dir)
+        make_output_dir(output_dir, 'notes')
+      end
+
+      def make_images_dir(output_dir)
+        make_output_dir(output_dir, 'images')
       end
 
       def red_output(str)

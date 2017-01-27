@@ -25,6 +25,7 @@ module Ever2boost
                  .gsub(/<li>(.*?)<\/li>/, '* \1')
                  .gsub(/<strong(.*?)>(.*?)<\/strong>/, '**\2**')
                  .gsub(/<a\ href=.(.*?).>(.*?)<\/a>/, '[\2](\1)')
+                 # .gsub(/<en-media\ hash=.(.+?).\ type=.(.+?)\/(.+?).\/>/, '![\1](\1.\3)')
         end
       end
     end

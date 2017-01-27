@@ -48,7 +48,7 @@ module Ever2boost
 
       warn Util.yellow_output("Ignored first #{(number_of_note - 250)} notes due to EvernoteAPI access limitation") if number_of_note > 250
       start_index = number_of_note > 250 ? number_of_note - 250 : 0
-      note_store.findNotesMetadata(developer_token, filter, start_index, number_of_note, spec)
+      note_store.findNotesMetadata(developer_token, filter, start_index, 1, spec)
     end
 
     # Download the all of notes fron Evernote and generate Boostnote storage from it
@@ -65,9 +65,10 @@ module Ever2boost
         note_guids = fetch_notes(filter).notes.map(&:guid)
         puts "importing #{note_store.getNotebook(developer_token, notebook_guid).name}"
         # TODO: assign the booleans
-        en_notes = note_guids.map { |note_guid| note_store.getNote(developer_token, note_guid, true, true, false, false) }
+        en_notes = note_guids.map { |note_guid| note_store.getNote(developer_token, note_guid, true, true, true, false) }
         en_notes.each do |en_note|
-          note = Note.new(title: en_note.title, content: en_note.content, notebook_guid: en_note.notebookGuid)
+          download_image(en_note) unless en_note.resources.nil?
+          note = Note.new(title: en_note.title, content: en_note.content, notebook_guid: en_note.notebookGuid, output_dir: output_dir)
           # puts "importing #{find_notebook_by_guid_from_notebook_list(notebook_list, note).title}"
           notebook_list.each do |list|
             # TODO: break if note not found
@@ -95,6 +96,18 @@ module Ever2boost
       notebook_list.map do |nl|
         nl if note.notebook_guid == nl.guid
       end.compact.first
+    end
+
+    # TODO: handle to not image file
+    def download_image(en_note)
+      en_note.resources.each do |resource|
+        imagename = resource.data.bodyHash.unpack("H*").first
+        extension = resource.mime.gsub(/(.+?)\//, '')
+        Util.make_images_dir(output_dir)
+        File.open("#{output_dir}/images/#{imagename}.#{extension}", 'w+b' ) do |f|
+          f.write note_store.getResourceData(developer_token, resource.guid)
+        end
+      end
     end
   end
 end

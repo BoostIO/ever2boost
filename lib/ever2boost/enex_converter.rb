@@ -12,7 +12,7 @@ module Ever2boost
         notes = en_notes.map do |note|
           title = REXML::Document.new(note).elements['note/title'].text
           puts "converting #{title}"
-          Note.new(title: title, content: "<div>#{REXML::Document.new(note).elements['note/content/text()'].value.sub(/.+\n/, '').sub(/.+\n/, '')}</div>")
+          Note.new(title: title, content: "<div>#{REXML::Document.new(note).elements['note/content/text()'].value.sub(/.+\n/, '').sub(/.+\n/, '')}</div>", output_dir: output_dir)
         end
         notebook_list = [NoteList.new(title: filename)]
         JsonGenerator.output(notebook_list, output_dir)
