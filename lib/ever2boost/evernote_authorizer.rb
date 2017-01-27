@@ -67,7 +67,7 @@ module Ever2boost
         # TODO: assign the booleans
         en_notes = note_guids.map { |note_guid| note_store.getNote(developer_token, note_guid, true, true, true, false) }
         en_notes.each do |en_note|
-          download_image(en_note) unless en_note.resources.nil?
+          download_image(en_note, output_dir) unless en_note.resources.nil?
           note = Note.new(title: en_note.title, content: en_note.content, notebook_guid: en_note.notebookGuid, output_dir: output_dir)
           # puts "importing #{find_notebook_by_guid_from_notebook_list(notebook_list, note).title}"
           notebook_list.each do |list|
@@ -99,7 +99,7 @@ module Ever2boost
     end
 
     # TODO: handle to not image file
-    def download_image(en_note)
+    def download_image(en_note, output_dir)
       en_note.resources.each do |resource|
         imagename = resource.data.bodyHash.unpack("H*").first
         extension = resource.mime.gsub(/(.+?)\//, '')
