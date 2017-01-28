@@ -17,7 +17,7 @@ module Ever2boost
     end
 
     def build_image_link(content_str)
-      content_str.gsub(/<en-media\ hash=.(.+?).\ type=.(.+?)\/(.+?).\/>/, "![#{'\1'}](#{self.output_dir}/images/#{'\1'}.#{'\3'})")
+      content_str.gsub(/<en-media\ hash=['|"](.+?)['|"](.*?).\ type=.(.+?)\/(.+?)['|"](.*?)\/>/, "![#{'\1'}](#{self.output_dir}/images/#{'\1'}.#{'\4'})")
     end
   end
 end
