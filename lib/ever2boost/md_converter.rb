@@ -13,7 +13,7 @@ module Ever2boost
         else
           # build table
           en_note.sub(/<tr(.*?)>(.*?)<\/tr>/m, '')
-          number_of_row = $2.scan(/<\/td>/).size
+          number_of_row = $2.nil? ? 0 : $2.scan(/<\/td>/).size
 
           en_note.gsub(/<en-note>(.*?)<\/en-note>/m, '\1')
                  .gsub(/<div(.*?)>(.*?)<\/div>/m, '\2\n')
@@ -44,8 +44,8 @@ module Ever2boost
                  .gsub(/<td(.*?)>(.*?)(\\n*?)<\/td>(\n*?)/m, '\2|')
                  .gsub(/<\/tbody>/, '')
                  .gsub(/<\/table>/, '')
-                 .gsub(/<table(.*?)>/, "#{'|' * (number_of_row + 1)}\n")
-                 .gsub(/<tbody(.*?)>/, "#{('|-' * (number_of_row + 1)).chop}")
+                 .gsub(/<table(.*?)>/, "#{'|' * (number_of_row + 1)}\n#{('|-' * (number_of_row + 1)).chop}")
+                 .gsub(/<tbody(.*?)>/, '')
                  #.gsub(/<tr(.*?)>(.*?)<\/tr>(\n*?)/m, '\n|\2')
                  #.gsub(/<td(.*?)>(.*?)(\\n*?)<\/td>(\n*?)/m, '\2|')
                  # .gsub(/<table(.*?)>(.*?)<\/table>/m, '\2')
