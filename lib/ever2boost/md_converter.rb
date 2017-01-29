@@ -1,4 +1,5 @@
 require 'rexml/document'
+require 'pry-byebug'
 
 module Ever2boost
   class MdConverter
@@ -21,6 +22,11 @@ module Ever2boost
           number_of_row = $2.nil? ? 0 : $2.scan(/<\/td>/).size
 
           en_note.gsub(/<en-note(.*?)>(.*?)<\/en-note>/m, '\2')
+                 .gsub(/(\ *)/m, '')
+                 .gsub(/\\n(\ *)/, '\n')
+                 .gsub(/(\ *?)/m, '')
+                 .gsub(/^\s*/, '')
+                 .gsub(/<div(.*?)-en-codeblock(.*?)><div(.*?)>(.*?)<\/div><\/div>/, '\n```\n\4\n```')
                  .gsub(/<div(.*?)>(.*?)<\/div>/m, '\2\n')
                  .gsub(/<div(.*?)>/, '')
                  .gsub(/<\/div>/, '\n')
@@ -57,10 +63,6 @@ module Ever2boost
                  .gsub(/<h3(.*?)>(.*?)<\/h3>/, '###\ \2')
                  .gsub(/<h4(.*?)>(.*?)<\/h4>/, '####\ \2')
                  .gsub(/<pre(.*?)>(.*?)<code(.*?)>(.*?)<\/code><\/pre>/, '```\n\4\n```')
-                 .gsub(/(\ *)/m, '')
-                 .gsub(/\\n(\ *)/, '\n')
-                 .gsub(/(\ *?)/m, '')
-                 .gsub(/^\s*/, '')
                  .gsub(/<hr(.*?)>/, '****')
                  #.gsub(/<tr(.*?)>(.*?)<\/tr>(\n*?)/m, '\n|\2')
                  #.gsub(/<td(.*?)>(.*?)(\\n*?)<\/td>(\n*?)/m, '\2|')
