@@ -1,23 +1,17 @@
 require 'rexml/document'
 require 'ever2boost/util'
+require 'pry-byebug'
 
 module Ever2boost
   class EnexConverter
     class << self
       def convert(enex, output_dir, filename)
         puts 'converting...'
-        en_notes = parse_plural_notes(enex)
-        notes = en_notes.map do |note|
-          title = note.title
-          puts "converting #{title}"
-          # note: String
-          #   "<note>(.*)</note>
-          content = "<div>#{note.content}</div>"
-          Note.new(title: title, content: content, output_dir: output_dir)
-        end
+        en_notes = parse_plural_notes(enex, output_dir)
         notebook_list = [NoteList.new(title: filename)]
         JsonGenerator.output(notebook_list, output_dir)
-        notes.each do |note|
+        en_notes.each do |note|
+          puts "converting #{note.title}"
           CsonGenerator.output(notebook_list.first.hash, note, output_dir)
         end
         puts Util.green_output("The notes are created at #{output_dir}")
@@ -25,13 +19,20 @@ module Ever2boost
 
       # enex: String
       #   "<?xml>(.*)</en-export>"
-      def parse_plural_notes(enex)
+      # return: Array
+      #   include Note objects
+      #   note.content = "<note>(.*)</note>"
+      # comment:
+      #   A .enex file include plural ntoes. Thus I need to handle separation into each note.
+      def parse_plural_notes(enex, output_dir)
         REXML::Document.new(Ever2boost::MdConverter.convert(enex)).elements['en-export'].map do |el|
-          unless el == "\n"
+          if el != "\n"
             xml_document = REXML::Document.new(el.to_s).elements
-            title = xml_document['note/title'].text
-            content = xml_document['note/content/text()'].to_s.sub(/.+\n/, '').sub(/.+\n/, '')
-            Note.new(title: title, content: content)
+            Note.new({
+              title: xml_document['note/title'].text,
+              content: xml_document['note/content/text()'].to_s.sub(/.+\n/, '').sub(/.+\n/, ''),
+              output_dir: output_dir
+            })
           end
         end.compact.flatten
       end
