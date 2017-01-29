@@ -1,12 +1,17 @@
 require 'rexml/document'
-require 'pry-byebug'
 
 module Ever2boost
   class MdConverter
     class << self
+      # params: String
+      #   "<note>(/.*/)</note>" (import)
+      #   or
+      #   "<?xml>(/.*/)</en-note>" (convert)
+      # return:
+      #   markdown content
       def convert(note_content)
+
         en_note = nil
-        # TODO: convert evernote xml to md
         REXML::Document.new(note_content).elements.each('*') { |el| en_note = el.to_s || en_note + el.to_s }
         if en_note.nil?
           note_content
