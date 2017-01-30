@@ -24,7 +24,7 @@ module Ever2boost
       # comment:
       #   A .enex file include plural ntoes. Thus I need to handle separation into each note.
       def parse_plural_notes(enex, output_dir)
-        REXML::Document.new(Ever2boost::MdConverter.convert(enex)).elements['en-export'].map do |el|
+        REXML::Document.new(enex).elements['en-export'].map do |el|
           if el != "\n"
             xml_document = REXML::Document.new(el.to_s).elements
             Note.new({

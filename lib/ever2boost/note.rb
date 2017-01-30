@@ -6,14 +6,14 @@ module Ever2boost
     attr_accessor :title, :content, :hash, :notebook_guid, :file_name, :output_dir
     def initialize(title: nil, content: nil, notebook_guid: nil, output_dir: nil)
       @title = title
-      @content = content
+      @content = MdConverter.convert(content)
       @notebook_guid = notebook_guid
       @file_name = SecureRandom.hex(DEFAULT_BYTES_NUMBER)
       @output_dir = output_dir
     end
 
     def md_content
-      build_image_link(MdConverter.convert(content))
+      build_image_link(self.content)
     end
 
     def build_image_link(content_str)
