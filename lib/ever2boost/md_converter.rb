@@ -26,6 +26,7 @@ module Ever2boost
 
           en_note.gsub(/<en-note(.*?)>(.*?)<\/en-note>/m, '\2')
                  .gsub(/<en-note\/>/, '')
+                 .gsub(/<\/en-note>/, '')
                  .gsub(/(\ *)/m, '')
                  .gsub(/\\n(\ *)/, '\n')
                  .gsub(/(\ *?)/m, '')
@@ -41,9 +42,9 @@ module Ever2boost
                  .gsub(/<p(.*?)>(.*?)<\/p>/m, '\2')
                  .gsub(/<p(.*?)>(.*?)<p\/>/m, '\2')
                  .gsub(/<p(.*?)>/m, '')
-                 .gsub(/<ul>(.*?)<\/ul>/m, '\1')
+                 .gsub(/<ul(.*?)>(.*?)<\/ul>/m, '\2')
                  .gsub(/<br(.*?)>/, '\n')
-                 .gsub(/<li(.*?)>(.*?)<\/li>/, '\n* \2')
+                 .gsub(/<li(.*?)>(.*?)<\/li>/, '* \2')
                  .gsub(/<a\ href=['|"](.*?)['|"](.*?)>(.*?)<\/a>/m, '[\3](\1)')
                  .gsub(/<en-todo(.*?)>/, '*\ [\ ]\ ')
                  .gsub(/<strong>\\n<\/strong>/, '')
@@ -60,7 +61,7 @@ module Ever2boost
                  .gsub(/<b>\\n<\/b>/, '')
                  .gsub(/<font(.*?)>(.*?)<\/font>/, '\2')
                  .gsub(/<tr(.*?)>(.*?)<\/tr>(\n*?)/m, '|\2')
-                 .gsub(/<td(.*?)>(.*?)(\\n*?)<\/td>(\n*?)/m, '\2|')
+                 .gsub(/<td(.*?)>(.*?)\n\\n<\/td>/m, '\2|')
                  .gsub(/<td(.*?)>(.*?)<\/td>/m, '\2|')
                  .gsub(/<\/tbody>/, '')
                  .gsub(/<\/table>/, '')
@@ -80,11 +81,6 @@ module Ever2boost
                  .gsub(/&gt;/, '>')
                  .gsub(/&lt;/, '<')
                  .gsub(/&amp;/, '&')
-                 .gsub(/<lib(.*?)><(.*?)<\/li>/, '* \2\n')
-                 #.gsub(/<tr(.*?)>(.*?)<\/tr>(\n*?)/m, '\n|\2')
-                 #.gsub(/<td(.*?)>(.*?)(\\n*?)<\/td>(\n*?)/m, '\2|')
-                 # .gsub(/<table(.*?)>(.*?)<\/table>/m, '\2')
-                 # .gsub(/<en-media\ hash=.(.+?).\ type=.(.+?)\/(.+?).\/>/, '![\1](\1.\3)')
         end
       end
     end

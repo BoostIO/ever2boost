@@ -29,7 +29,7 @@ module Ever2boost
             xml_document = REXML::Document.new(el.to_s).elements
             Note.new({
               title: xml_document['note/title'].text,
-              content: "<div>#{xml_document['note/content/text()'].to_s.sub(/.+\n/, '').sub(/.+\n/, '')}</div>",
+              content: "<div>#{xml_document['note/content/text()'].to_s.sub(/<\?xml(.*?)\?>(.*?)<\!DOCTYPE(.*?)>/, '')}</div>",
               output_dir: output_dir
             })
           end
