@@ -3,7 +3,7 @@
 
 ever2bost is a CLI tool for conversion Evernote to Boostnote.
 
-## Quick start
+# Quick start
 Get Evernote developre token from [here](https://www.evernote.com/api/DeveloperToken.action).
 
 ```
@@ -11,6 +11,8 @@ $ gem install ever2boost
 $ ever2boost import
 DEVELOPER_TOKEN: <input your developer token>
 ```
+
+****
 
 ## Installation
 Ruby 2.0.0 or above is required.
