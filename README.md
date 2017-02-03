@@ -12,6 +12,15 @@ $ ever2boost import
 DEVELOPER_TOKEN: <input your developer token>
 ```
 
+## Connect to your Boostnote
+You need to connect it to Boostnote. Go Menu -> Add Storage and add it.
+
+![how_to_add_storage](docs/images/img2.png)
+
+And select your storage. It's at `~/evernote_storage` by default on `import`, `~/evernote_storage_enex` by default on `convert`.
+
+![how_to_chose_the_directory](docs/images/img3.png)
+
 ****
 
 ## ever2boost command
@@ -70,15 +79,6 @@ Options:
 
 convert from .enex
 ```
-
-### Connect to your Boostnote
-Finally, you need to connect it to Boostnote. Go Menu -> Add Storage and add it.
-
-![how_to_add_storage](docs/images/img2.png)
-
-And select your storage. It's at `~/evernote_storage` by default on `import`, `~/evernote_storage_enex` by default on `convert`.
-
-![how_to_chose_the_directory](docs/images/img3.png)
 
 ## Requirements
 Ruby: 2.0.0 or above  
