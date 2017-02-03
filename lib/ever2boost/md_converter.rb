@@ -27,7 +27,6 @@ module Ever2boost
           en_note.gsub(/<en-note(.*?)>(.*?)<\/en-note>/m, '\2')
                  .gsub(/<en-note\/>/, '')
                  .gsub(/<\/en-note>/, '')
-                 .gsub(/(\ *)/m, '')
                  .gsub(/\\n(\ *)/, '\n')
                  .gsub(/(\ *?)/m, '')
                  .gsub(/^\s*/, '')
