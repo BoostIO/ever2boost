@@ -34,7 +34,7 @@ $ gem install ever2boost
 
 That's it!
 
-## How to use
+## ever2boost command
 Ever2boost has 2 commands for conversion `convert` and `import`.
 
 ```
@@ -73,7 +73,7 @@ import from evernote
 $ ever2boost import
 DEVELOPER_TOKEN: <input your developer token>
 ```
-And `import` starts. It uses EvernoteAPI, thus you should take care access limitations.
+And `import` will start. It uses EvernoteAPI, thus you should take care access limitations.
 
 #### convert
 Convert notes from `.enex` file which is exported file from Evernote.

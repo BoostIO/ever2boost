@@ -86,7 +86,7 @@ module Ever2boost
       if exception.class == Evernote::EDAM::Error::EDAMUserException
         abort Util.red_output('Error! Confirm your developer token.')
       elsif exception.class == Evernote::EDAM::Error::EDAMSystemException
-        abort Util.red_output("Error! You reached EvernoteAPI rate limitation.\nThe notes processed so far have been created successfully.\nMore information: https://github.com/BoostIO/ever2boost/tree/master/docs/Api_error.md")
+        abort Util.red_output("Error! You reached EvernoteAPI rate limitation.\nThe notes processed so far have been created successfully.\nMore information: https://github.com/BoostIO/ever2boost/tree/master/docs/api_error.md")
       else
         raise exception
       end
