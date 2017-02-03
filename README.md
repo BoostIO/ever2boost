@@ -2,6 +2,7 @@
 [![Build Status](https://travis-ci.org/BoostIO/ever2boost.svg?branch=master)](https://travis-ci.org/BoostIO/ever2boost)
 
 <div style="text-align: center;">
+  <img src="https://raw.githubusercontent.com/BoostIO/ever2boost/master/docs/images/img4.png">
 ![ever2boost](docs/images/img4.png)
 </div>
 
