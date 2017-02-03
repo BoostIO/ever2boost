@@ -43,7 +43,7 @@ Import all of notes from cloud storage at Evernote.
 `import` command has 1 option `d` which specify output directory.
 
 ```
-$ bundle exec exec/ever2boost help import
+$ ever2boost help import
 Usage:
   ever2boost import
 
