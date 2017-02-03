@@ -14,26 +14,6 @@ DEVELOPER_TOKEN: <input your developer token>
 
 ****
 
-## Installation
-Ruby 2.0.0 or above is required.
-
-1. install bundler if you don't have
-
-```
-$ gem install bundler
-```
-
-> if it fails by permission, you can run as sudo (perhaps you use default Ruby in OS)
-
-2. install ever2boost
-Just run below:
-
-```
-$ gem install ever2boost
-```
-
-That's it!
-
 ## ever2boost command
 Ever2boost has 2 commands for conversion `convert` and `import`.
 
@@ -90,6 +70,18 @@ Options:
 
 convert from .enex
 ```
+
+### Requirements
+Ruby: 2.0.0 or above
+bundler: Corresponding to Ruby
+
+if you don't have bundler:
+
+```
+$ gem install bundler
+```
+
+> if it fails by permission, you can run as sudo (perhaps you're using preinstalled Ruby in the OS)
 
 ### Connect to your Boostnote
 Finally, you need to connect it to Boostnote. Go Menu -> Add Storage and add it.
