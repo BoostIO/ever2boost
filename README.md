@@ -1,7 +1,7 @@
 # ever2boost
 [![Build Status](https://travis-ci.org/BoostIO/ever2boost.svg?branch=master)](https://travis-ci.org/BoostIO/ever2boost)
 
-<div style="text-align: center;">
+<div align='center'>
   <img width='70%' src="https://raw.githubusercontent.com/BoostIO/ever2boost/master/docs/images/img4.png">
 </div>
 
