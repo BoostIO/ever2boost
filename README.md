@@ -3,6 +3,15 @@
 
 ever2bost is a CLI tool for conversion Evernote to Boostnote.
 
+## Quick start
+Get Evernote developre token from [here](https://www.evernote.com/api/DeveloperToken.action).
+
+```
+$ gem install ever2boost
+$ ever2boost import
+DEVELOPER_TOKEN: <input your developer token>
+```
+
 ## Installation
 Ruby 2.0.0 or above is required.
 
@@ -99,6 +108,8 @@ First of all, look over [this document](docs/emergency.md). After that, if you w
 
 ## Contributing
 Bug reports and pull requests are welcome on GitHub at https://github.com/BoostIO/ever2boost.
+
+More information: [how_to_develop_ever2boost](docs/development.md)
 
 ## License
 
