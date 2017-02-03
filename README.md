@@ -1,6 +1,10 @@
 # ever2boost
 [![Build Status](https://travis-ci.org/BoostIO/ever2boost.svg?branch=master)](https://travis-ci.org/BoostIO/ever2boost)
 
+<div style="text-align: center;">
+![ever2boost](docs/images/img4.png)
+</div>
+
 ever2bost is a CLI tool for conversion Evernote to Boostnote.
 
 # Quick start
