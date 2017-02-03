@@ -29,7 +29,7 @@ Ever2boost has 2 commands for conversion `convert` and `import`.
 ```
 $ ever2boost -h
 Commands:
-  ever2boost convert         # convert fron .enex
+  ever2boost convert         # convert from .enex
   ever2boost help [COMMAND]  # Describe available commands or one specific co...
   ever2boost import          # import from evernote
 ```

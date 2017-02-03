@@ -16,7 +16,7 @@ module Ever2boost
       EvernoteAuthorizer.new(developer_token).import(output_dir)
     end
 
-    desc 'convert', 'convert fron .enex'
+    desc 'convert', 'convert from .enex'
     option :directory, aliases: :d, banner: 'DIRCTORY_PATH', desc: 'make Boostnote storage in the directory default: ~/evernote_storage'
     def convert(path)
       output_dir = options[:directory] || DEFAULT_OUTPUT_DIR_ENEX

@@ -51,7 +51,7 @@ module Ever2boost
       note_store.findNotesMetadata(developer_token, filter, start_index, number_of_note, spec)
     end
 
-    # Download the all of notes fron Evernote and generate Boostnote storage from it
+    # Download the all of notes from Evernote and generate Boostnote storage from it
     # TODO: move this method to CLI
     def import(output_dir)
       puts 'processing...'
