@@ -71,8 +71,17 @@ Options:
 convert from .enex
 ```
 
-### Requirements
-Ruby: 2.0.0 or above
+### Connect to your Boostnote
+Finally, you need to connect it to Boostnote. Go Menu -> Add Storage and add it.
+
+![how_to_add_storage](docs/images/img2.png)
+
+And select your storage. It's at `~/evernote_storage` by default on `import`, `~/evernote_storage_enex` by default on `convert`.
+
+![how_to_chose_the_directory](docs/images/img3.png)
+
+## Requirements
+Ruby: 2.0.0 or above  
 bundler: Corresponding to Ruby
 
 if you don't have bundler:
@@ -83,14 +92,7 @@ $ gem install bundler
 
 > if it fails by permission, you can run as sudo (perhaps you're using preinstalled Ruby in the OS)
 
-### Connect to your Boostnote
-Finally, you need to connect it to Boostnote. Go Menu -> Add Storage and add it.
 
-![how_to_add_storage](docs/images/img2.png)
-
-And select your storage. It's at `~/evernote_storage` by default on `import`, `~/evernote_storage_enex` by default on `convert`.
-
-![how_to_chose_the_directory](docs/images/img3.png)
 
 ## Something happens
 If your Boostnote would be broken:
