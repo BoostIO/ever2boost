@@ -33,7 +33,7 @@ module Ever2boost
                  .gsub(/<div(.*?)-en-codeblock(.*?)><div(.*?)>(.*?)<\/div><\/div>/, "\n```\n#{code_block}\n```")
                  .gsub(/<div(.*?)>(.*?)<\/div>/m, '\2')
                  .gsub(/<div(.*?)>/, '')
-                 .gsub(/<\/div>/, '\n')
+                 .gsub(/<\/div>/, '')
                  .gsub(/#+/, '\0 ')
                  .gsub(/<span(.*?)>(.*?)<\/span>/m, '\2')
                  .gsub(/<span(.*?)>/, '\2')
