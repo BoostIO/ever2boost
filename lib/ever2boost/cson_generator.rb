@@ -20,7 +20,7 @@ updatedAt: "#{timestamp}"
       end
 
       def timestamp
-        Time.now.strftime('%Y-%m-%dT%H:%M:%S')
+        Time.new.getutc.strftime('%Y-%m-%dT%H:%M:%S')
       end
 
       def output(folder_hash, note, output_dir)
