@@ -25,5 +25,11 @@ module Ever2boost
       filename = File.basename(path, '.enex')
       EnexConverter.convert(enex, output_dir, filename)
     end
+
+    map %w[--version -v] => :__print_version
+    desc "--version, -v", "print the version"
+    def __print_version
+      puts Ever2boost::VERSION
+    end
   end
 end
