@@ -29,3 +29,16 @@ And also Rubocop is used, thus you need to install Rubocop if you don't have:
 $ gem install rubocop
 $ rubocop -c .rubocop_todo.yml
 ```
+
+# Release
+First, you need to register your access key to rubygems. And build and release.
+
+```
+$ bundle exec rake build
+ever2boost x.x.x built to pkg/ever2boost-0.1.0.gem.
+$ bundle exec rake release
+ever2boost x.x.x built to pkg/ever2boost-0.1.0.gem.
+Tagged vx.x.x.
+Pushed git commits and tags.
+Pushed ever2boost x.x.x to rubygems.org.
+```
