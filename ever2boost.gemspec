@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['suenagaryoutaabc@gmail.com']
 
   spec.summary       = 'Convert Evernote to Boostnote'
-  spec.description   = 'ever2boost converts the all of your notes in evernote into Boostnote'
+  spec.description   = 'ever2boost converts the all of your notes in Evernote into Boostnote'
   spec.homepage      = 'https://github.com/BoostIO/ever2boost'
   spec.license       = 'MIT'
 
