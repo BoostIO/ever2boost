@@ -16,6 +16,8 @@ $ ever2boost import
 DEVELOPER_TOKEN: <input your developer token>
 ```
 
+Limitation? Go [here](docs/api_error.md)
+
 ## Connect to your Boostnote
 You need to connect it to Boostnote. Go Menu -> Add Storage and add it.
 
@@ -24,8 +26,6 @@ You need to connect it to Boostnote. Go Menu -> Add Storage and add it.
 And select your storage. It's at `~/evernote_storage` by default on `import`.
 
 ![how_to_chose_the_directory](docs/images/img3.png)
-
-Limitation? Go [here](docs/api_error.md)
 
 ****
 
