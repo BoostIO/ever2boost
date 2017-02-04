@@ -21,9 +21,11 @@ You need to connect it to Boostnote. Go Menu -> Add Storage and add it.
 
 ![how_to_add_storage](docs/images/img2.png)
 
-And select your storage. It's at `~/evernote_storage` by default on `import`, `~/evernote_storage_enex` by default on `convert`.
+And select your storage. It's at `~/evernote_storage` by default on `import`.
 
 ![how_to_chose_the_directory](docs/images/img3.png)
+
+Limitation? Go [here](docs/api_error.md)
 
 ****
 
@@ -69,7 +71,9 @@ DEVELOPER_TOKEN: <input your developer token>
 And `import` will start. It uses EvernoteAPI, thus you should take care access limitations.
 
 #### convert
-Convert notes from `.enex` file which is exported file from Evernote.
+Convert notes from `.enex` file which is **exported file from Evernote**.
+
+You can get how to export from [official document](https://help.evernote.com/hc/en-us/articles/209005557-How-to-back-up-export-and-restore-import-notes-and-notebooks).
 
 `convert` has 1 option `d` which specify output directory.
 
