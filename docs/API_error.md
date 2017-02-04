@@ -15,7 +15,7 @@ You need to try `convert` command if you just want to import the folder.
 * [Fatal] Up to **500** notes on import
 
 When it happens, ever2boost tells us an error below:
-![error_on_import](docs/images/img5.png)
+![error_on_import](images/img5.png)
 
 Actually I don't know the exact terms of number of notes. I just experienced in my environment.
 
