@@ -1,5 +1,4 @@
 require 'rexml/document'
-require 'pry-byebug'
 
 module Ever2boost
   class MdConverter
@@ -81,7 +80,7 @@ module Ever2boost
                  .gsub(/&gt;/, '>')
                  .gsub(/&lt;/, '<')
                  .gsub(/&amp;/, '&')
-                 .gsub(/\\n\\n/, '')
+                 .gsub(/\\n\\n/m, '')
         end
       end
     end
