@@ -2,7 +2,7 @@
 ever2boost uses EvernoteAPI, therefore there are some limitations.
 
 ## Limitations
-* [<span style="background-color: #FFFF00">Warning</span>] Up to **250** notes in each folder
+* [<font color="orange">Warning</font>] Up to **250** notes in each folder
 
 When the folder which ever2boost try to import has over 250 notes, ever2boost downloads first 250 notes from latest. For example, when a folder has 260 notes, the rest 10 old notes are ignored. Then the warning is appear:
 
@@ -12,7 +12,7 @@ Ignore first 10 notes due to EvernoteAPI access limitation in this notebook.
 
 You need to try `convert` command if you just want to import the folder.
 
-* [<span style="background-color: #FF0000">Fatal</span>] Up to **500** notes on import
+* [<font color="orange">Fatal</font>] Up to **500** notes on import
 
 When it happens, ever2boost tells us an error below:
 ![error_on_import](images/img5.png)
