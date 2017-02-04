@@ -53,6 +53,7 @@ module Ever2boost
                  .gsub(/<s>([^\n].+?)<\/s>/, '~~\1~~')
                  .gsub(/<i>\\n<\/i>/, '')
                  .gsub(/<i>([^\n].+?)<\/i>/, '*\1*')
+                 .gsub(/<i(.*?)>(.*?)<\/i>/m, '*\2*')
                  .gsub(/<em>\\n<\/em>/, '')
                  .gsub(/<em>([^\n].+?)<\/em>/, '_\1_')
                  .gsub(/<em(.*?)>(.*?)<\/em>/, '_\2_')
@@ -80,6 +81,7 @@ module Ever2boost
                  .gsub(/&gt;/, '>')
                  .gsub(/&lt;/, '<')
                  .gsub(/&amp;/, '&')
+                 .gsub(/\\n\\n/, '')
         end
       end
     end
