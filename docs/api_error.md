@@ -17,7 +17,7 @@ You need to try `convert` command if you just want to import the folder.
 When it happens, ever2boost tells us an error below:
 ![error_on_import](images/img5.png)
 
-Actually I don't know the **exact** terms of number of notes, I just experienced in my environment. And **the limitation is reset every hour**.
+Actually I don't know the **exact** terms of number of notes, I just experienced in my environment. And **the limitation is reset every hour**. Further more, I've confirmed the error happens in case of capacity limit.
 
 **IMPORTANT**: The import is success (until the limitation) unless the error happens, thus you can connect the directory to Boostnote normaly.
 
