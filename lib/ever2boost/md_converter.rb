@@ -80,6 +80,7 @@ module Ever2boost
                  .gsub(/&gt;/, '>')
                  .gsub(/&lt;/, '<')
                  .gsub(/&amp;/, '&')
+                 .gsub(/&quot;/, '"')
                  .gsub(/\\n\\n/m, '')
         end
       end
