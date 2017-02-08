@@ -52,7 +52,6 @@ module Ever2boost
     end
 
     # Download the all of notes from Evernote and generate Boostnote storage from it
-    # TODO: move this method to CLI
     def import(output_dir)
       puts 'processing...'
       FileUtils.mkdir_p(output_dir) unless FileTest.exist?(output_dir)
@@ -71,7 +70,6 @@ module Ever2boost
           note = Note.new(title: en_note.title, content: en_note.content, notebook_guid: en_note.notebookGuid, output_dir: output_dir)
           # puts "importing #{find_notebook_by_guid_from_notebook_list(notebook_list, note).title}"
           notebook_list.each do |list|
-            # TODO: break if note not found
             CsonGenerator.output(list.hash, note, output_dir) if list.guid == note.notebook_guid
           end
         end
@@ -98,7 +96,7 @@ module Ever2boost
       end.compact.first
     end
 
-    # TODO: handle to not image file
+    # TODO: handle with not image file
     def download_image(en_note, output_dir)
       en_note.resources.each do |resource|
         imagename = resource.data.bodyHash.unpack("H*").first
