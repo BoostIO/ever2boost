@@ -33,7 +33,6 @@ module Ever2boost
     end
 
     def notebook_list
-      guids = notebook_guids
       fetch_notebook_list.map { |nl| Ever2boost::NoteList.new(title: nl.name, guid: nl.guid) }
     end
 

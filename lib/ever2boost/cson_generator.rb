@@ -4,7 +4,7 @@ module Ever2boost
   class CsonGenerator
     class << self
       def build(folder_hash, note)
-        cson = <<-EOS
+        <<-EOS
 type: "MARKDOWN_NOTE"
 folder: "#{folder_hash}"
 title: "#{note.title}"
