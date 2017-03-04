@@ -5,6 +5,3 @@ require 'ever2boost/md_converter'
 require 'ever2boost/cson_generator'
 require 'ever2boost/json_generator'
 require 'ever2boost/cli'
-
-module Ever2boost
-end

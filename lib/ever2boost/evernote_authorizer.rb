@@ -33,7 +33,6 @@ module Ever2boost
     end
 
     def notebook_list
-      guids = notebook_guids
       fetch_notebook_list.map { |nl| Ever2boost::NoteList.new(title: nl.name, guid: nl.guid) }
     end
 
@@ -91,9 +90,7 @@ module Ever2boost
     end
 
     def find_notebook_by_guid_from_notebook_list(notebook_list, note)
-      notebook_list.map do |nl|
-        nl if note.notebook_guid == nl.guid
-      end.compact.first
+      notebook_list.find { |nl| note.notebook_guid == nl.guid }
     end
 
     # TODO: handle with not image file

@@ -5,16 +5,14 @@ module Ever2boost
   class JsonGenerator
     class << self
       def build(notebook_list)
-        {
-          folders: notebook_list.map do |list|
-            {
-              key: list.hash,
-              name: list.title,
-              color: list.color
-            }
-          end,
-          version: '1.0'
-        }.to_json
+        folders = notebook_list.map do |list|
+          {
+            key: list.hash,
+            name: list.title,
+            color: list.color
+          }
+        end
+        { folders: folders, version: '1.0' }.to_json
       end
 
       def output(notebook_list, output_dir)
