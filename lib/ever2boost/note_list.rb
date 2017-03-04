@@ -17,13 +17,10 @@ module Ever2boost
     attr_accessor :title, :hash, :guid, :color
 
     def initialize(title: nil, hash: nil, guid: nil, color: nil)
-      index = ((Random.new.rand * 7) * 10.floor % 7).to_i
-      color = FOLDER_COLORS[index]
-
       @title = title
       @hash = SecureRandom.hex(DEFAULT_BYTES_NUMBER)
       @guid = guid
-      @color = color
+      @color = FOLDER_COLORS.sample
     end
   end
 end
