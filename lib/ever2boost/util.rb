@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module Ever2boost
   class Util
     class << self
