@@ -8,11 +8,11 @@ module Ever2boost
         folders = notebook_list.map do |list|
           {
             key: list.hash,
-            name: list.title,
-            color: list.color
+            color: list.color,
+            name: list.title
           }
         end
-        { folders: folders, version: '1.0' }.to_json
+        JSON.pretty_generate({ folders: folders, version: '1.0' })
       end
 
       def output(notebook_list, output_dir)
