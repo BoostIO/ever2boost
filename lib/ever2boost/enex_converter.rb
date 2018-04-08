@@ -29,11 +29,17 @@ module Ever2boost
             xml_document = REXML::Document.new(el.to_s).elements
             Note.new({
               title: xml_document['note/title'].text,
-              content: "<div>#{xml_document['note/content/text()'].to_s.sub(/<\?xml(.*?)\?>(.*?)<\!DOCTYPE(.*?)>/m, '')}</div>",
+              content: "<div>#{strip_doctype(xml_document)}</div>",
               output_dir: output_dir
             })
           end
         end.compact.flatten
+      end
+
+      private
+
+      def strip_doctype(xml_document)
+        xml_document['note/content/text()'].to_s.sub(/(<\?xml(.*?)\?>(.*?))?<\!DOCTYPE(.*?)>/m, '')
       end
     end
   end
