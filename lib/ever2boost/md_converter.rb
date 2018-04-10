@@ -2,6 +2,7 @@ require 'rexml/document'
 
 module Ever2boost
   class MdConverter
+    CODE_BLOCK_REGEX = %r{<div\s(.*?)border:\s1px\ssolid\srgba\((0,\s){3}0\.14902\)(.*?)(-en-codeblock)?(.*?)><div(.*?)>(<span(.*?)>)?(.*?)(<\/span>)?<\/div><\/div>}
     class << self
       # params: String
       #   "<note>(/.*/)</note>" (import)
@@ -20,16 +21,13 @@ module Ever2boost
           en_note.sub(/<tr(.*?)>(.*?)<\/tr>/m, '')
           number_of_row = $2.nil? ? 0 : $2.scan(/<\/td>/).size
 
-          en_note.gsub(/<div(.*?)-en-codeblock(.*?)><div(.*?)>(.*?)<\/div><\/div>/, '\n```\n\4\n```')
-          code_block = $4
-
           en_note.gsub(/<en-note(.*?)>(.*?)<\/en-note>/m, '\2')
                  .gsub(/<en-note\/>/, '')
                  .gsub(/<\/en-note>/, '')
                  .gsub(/\\n(\ *)/, '\n')
                  .gsub(/(\ *?)/m, '')
                  .gsub(/^\s*/, '')
-                 .gsub(/<div(.*?)-en-codeblock(.*?)><div(.*?)>(.*?)<\/div><\/div>/, "\n```\n#{code_block}\n```")
+                 .gsub(CODE_BLOCK_REGEX) { "\n```\n#{Regexp.last_match[9]}\n```\n" }
                  .gsub(/<div(.*?)>(.*?)<\/div>/m, '\2')
                  .gsub(/<div(.*?)>/, '')
                  .gsub(/<\/div>/, '')
