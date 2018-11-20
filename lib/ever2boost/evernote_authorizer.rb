@@ -2,6 +2,7 @@ require 'evernote-thrift'
 require 'ever2boost/note'
 require 'ever2boost/note_list'
 require 'ever2boost/util'
+require 'fileutils'
 
 module Ever2boost
   class EvernoteAuthorizer
